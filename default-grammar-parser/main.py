@@ -2,7 +2,7 @@
 Main entry point.
 """
 import sys
-from parser import Parser
+from myParser import Parser
 from lexer import Lexer
 from string import ascii_lowercase
 
@@ -57,5 +57,6 @@ lexer = Lexer(lexical_table, token_table, source_code)
 token_stream = lexer.perform_analysis()
 
 # Perform the parse.
-parser = Parser(token_stream, "parse_table.csv")
+parser = Parser(token_stream, "parsetable.csv")
 parser.parse()
+print("end")
