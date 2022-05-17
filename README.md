@@ -18,3 +18,4 @@ Input: code.txt
 This currently contains the string: id = id + id  
 
 Output: 
+https://media.discordapp.net/attachments/952098428672942110/976193106875646042/unknown.png?width=949&height=568
