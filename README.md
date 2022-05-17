@@ -14,3 +14,7 @@ Desiree Gomez (desigmomez@csu.fullerton.edu)
 Compile and execute this program by running python3 main.py code.txt  
 
 ## Inputs and outputs
+Input: code.txt  
+This currently contains the string: id = id + id  
+
+Output: 
