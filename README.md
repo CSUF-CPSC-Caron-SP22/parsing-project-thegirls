@@ -5,8 +5,12 @@ This is our project.
 
 ## Team members and emails
 
-Alan Turing (aturing@dcaron.xyz)
+Ariadne Rincon (arincon10912@csu.fullerton.edu)
+Lea Albano (leaalbano@csu.fullerton.edu)
+Desiree Gomez (desigmomez@csu.fullerton.edu)
 
 ## How to compile and execute
+
+Compile and execute this program by running python3 ./myParser.py
 
 ## Inputs and outputs
