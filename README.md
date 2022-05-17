@@ -17,13 +17,13 @@ Compile and execute this program by running python3 main.py code.txt
 Input: code.txt  
 This currently contains the string: id = id + id  
 
-Output: 
-**Completes the first step of parsing correctly**
-ADDING $ TO STRING: id = id + id$
-CURRENT STACK: [0]
-INPUT: id
-TAKING ACTION: S3
-CURRENT STACK: [0, 'id', '3']
-INPUT: =
+Output:  
+**Completes the first step of parsing correctly**  
+ADDING $ TO STRING: id = id + id$  
+CURRENT STACK: [0]  
+INPUT: id  
+TAKING ACTION: S3  
+CURRENT STACK: [0, 'id', '3']  
+INPUT: =  
 
 ![image](https://user-images.githubusercontent.com/54596709/168888352-f4522dda-e0c9-46c8-b85b-159557e9b05d.png)
