@@ -11,7 +11,7 @@ Desiree Gomez (desigmomez@csu.fullerton.edu)
 
 ## How to compile and execute
 
-Compile and execute this program by running python3 main.py code.txt  
+Compile and execute this program by running **python3 main.py code.txt**   
 
 ## Inputs and outputs
 Input: code.txt  
