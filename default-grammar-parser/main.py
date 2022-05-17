@@ -56,7 +56,10 @@ lexer = Lexer(lexical_table, token_table, source_code)
 # Perform the lexical analysis.
 token_stream = lexer.perform_analysis()
 
+
+
 # Perform the parse.
+
 parser = Parser(token_stream, "parsetable.csv")
 parser.parse()
 print("end")

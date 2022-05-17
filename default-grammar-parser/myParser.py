@@ -24,11 +24,8 @@ class Parser:
         self.parser_table = self.__read_parse_table(parse_table_file)
         # Append the end of file symbol to the end.
         self.token_stream.append(("$", "$"))
-        # Creates empty stack
         self.stack = []
-        # Prints current stack
-        stackContent = self.token_stream
-        print(stackContent)
+        inputContent = self.token_stream
 
     def __read_parse_table(self, parse_table_file):
         """
@@ -39,17 +36,15 @@ class Parser:
         #Professor Psudocode from proj. document
         # Driver:
         # Place $ at the end of the input string 
-        file = open('code.txt')
-        fileContents = file.read()
-        print("file contents: ", fileContents)
-        for lines in file:      
-            lines.append("$")
-                
-        # Push state 0 onto the stack  
-        self.token_stream.append("0") 
-        # Prints current stack
-        stackContent = self.token_stream 
-        print(stackContent)
+        file = open("code.txt", "a")
+        file.write("$ \n")
+        file.close()
+        
+        file = open("code.txt", "r")
+        print("ADDING $ TO END OF STRING: ", file.read())
+        file.close()
+    
+      
         
         # Repeat
         # Let qm be the current state (TOS state) and  i the token
@@ -80,84 +75,104 @@ class Parser:
         return None
 
     def parse(self):
-        self.parse_table_file = 'code.txt'
-        productionRulesArray = self.__read_parse_table(self.parse_table_file)
-        file = open('code.txt')
-        fileContents = file.read()
-        while (fileContents != ( "ACCT" or " " )): #loops until accepting state or error    
-            qm = 0 #row name
-            i = fileContents.split(' ') #column
-        # Find   x = Table [Qm, i];
-            tableLookup = pd.read_csv('parsetable.csv')
-            x = tableLookup.at[qm, i] 
-            print(x)
-            #print(qm, " , ", i , " -> ",x )
 
+        df = pd.DataFrame([["","S3","","",1,2], 
+                           ["ACCT","","","","",""],
+                           ["","","S4","S5","",""],
+                           ["R2","","R4","R4","",""],
+                           ["","S6","","","",""],
+                           ["","S8","","","",7],
+                           ["","","R3","R3","",""],
+                           ["R1","","S9","","",""],
+                           ["R4","","R4","","",""],
+                           ["","S10","","","",""],
+                           ["R3","","R3","","",""]],
+                           index = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], columns = ["$","id", "+", "=","S","E"])
+
+        # Push state 0 onto the stack 
+        myStack = []
+        myStack.append(0) 
+        print("CURRENT STACK: ", myStack)
+        # Prints current stack
+
+        fileObj = open("grammar.txt", "r") #opens the file in read mode
+        productionRulesArray = fileObj.read().splitlines() #puts the file into an array
+        fileObj.close()
+
+        code = []
+        with open('code.txt','r') as file:
+            # reading each line    
+            for line in file:
+                # reading each word        
+                for word in line.split():
+                    # displaying the words           
+                    code.append(word)
+        k = 0
+        x = ""
+        while (x != "ACCT"): #loops until accepting state    
+            stack_length = len(myStack)
+            qm =  myStack[stack_length - 1] #row
+            i =  code[k] #column
+            print("INPUT: ", i)
+            # Find   x = Table [Qm, i];
+            x = df.at[qm, i]
+            print("TAKING ACTION: ", x)
+            #print(qm, " , ", i , " -> ",x )
         # Case x of
         # S(Qn) : Push (i) and enter qn, i.e., push (Qn);
         
             if (x[0] == "S"):
-                self.token_stream.append(i) #push(i)
-                self.token_stream.append(x[1]) #push number after S
+                myStack.append(i) #push(i)
+                myStack.append(x[1]) #push number after S
                 # Prints current stack
-                stackContent = self.token_stream 
-                print(stackContent)
+                print("CURRENT STACK: ", myStack)
+                code.pop(k)
                 
         #  R(n): Reduce by production #n by popping  2x # of RHS symbols
-            if (x[0] == "R"):
+            elif (x[0] == "R"):
                 productionRuleNum = x[1] - 1
+                print("PRODUCTION RULE NUM: ", productionRuleNum)
                 productionRule = productionRulesArray[productionRuleNum] 
+                print("PRODUCTION RULE: ", productionRule)
                 #example: productionRule = E -> id
         #  Let Qj be the TOS state
         #  Push  the LHS  L onto the stack
                 if(productionRuleNum == (0 | 2)): #If production rule 1 or 3
-                    self.token_stream.pop(6)
+                    myStack.pop(6)
+                    myStack.append("S")
                     # Prints current stack
-                    stackContent = self.token_stream 
-                    print(stackContent)
-                    stackQuantity = self.token_stream.len()
-                    Qj = self.token_stream[stackQuantity - 1] #Gets TOS after popping
-                    if (productionRuleNum == 0):
-                        self.token_stream("S")
-                        # Prints current stack
-                        stackContent = self.token_stream 
-                        print(stackContent)
-                    elif (productionRuleNum == 2):
-                        self.token_stream.append("E")
-                        # Prints current stack
-                        stackContent = self.token_stream 
-                        print(stackContent)
+                    stack_length = myStack.len()
+                    Qj = myStack[stack_length - 1] #Gets TOS after popping
+                    print("QJ: ", Qj)
+
                 elif ((productionRuleNum) == (1 | 3)): #If production rule 2 or 4
-                    self.token_stream.pop(2)
+                    myStack.pop(2)
                     # Prints current stack
-                    stackContent = self.token_stream 
-                    print(stackContent)
-                    stackQuantity = self.token_stream.len()
-                    Qj = self.token_stream[stackQuantity - 1] #Gets TOS after popping
+                    print(myStack)
+                    stack_length = myStack.len()
+                    Qj = myStack[stack_length - 1] #Gets TOS after popping
                     if(productionRuleNum == 1):
-                        self.token_stream.append("S")
+                        myStack.append("S")
                         # Prints current stack
-                        stackContent = self.token_stream 
-                        print(stackContent)
+                        print(myStack)
                     elif (productionRuleNum == 3):
-                        self.token_stream.append("E")
+                        myStack.append("E")
                         # Prints current stack
-                        stackContent = self.token_stream 
-                        print(stackContent)
+                        print(myStack)
                 
-                L = self.self[stackQuantity - 1]
+                L = stack_length - 1
 
         #  Push Qk = Table [Qj, L] onto the stack
-                Qk = tableLookup.at[Qj, L]
-                self.token_stream.append(Qk)
+                Qk =df.at[Qj, L]
+                myStack.append(Qk)
                 # Prints current stack
-                stackContent = self.token_stream
-                print(stackContent)
+                print(myStack)
         # ACCT: Parsing is complete
         # Empty:  error condition
         # Until  ACCT or Error
+    
         # Error Message
-        if (fileContents == " "):
+        if (file == " "):
             print("Error Message: Input is an empty string.")
         print(self.__get_next_token())
         #raise NotImplementedError()
